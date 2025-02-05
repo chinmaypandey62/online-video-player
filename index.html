@@ -8,7 +8,7 @@
     body {
       background-color: #1a1a1a;
       color: #fff;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -19,8 +19,12 @@
       margin-bottom: 20px;
     }
     header h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       margin: 0;
+      background: linear-gradient(45deg, #ffcc00, #ff9900);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
     header p {
       font-size: 1rem;
@@ -29,11 +33,11 @@
     }
     .container {
       width: 90%;
-      max-width: 800px;
-      background: #333;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      max-width: 1000px;
+      background: #252525;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       margin-bottom: 20px;
     }
     form {
@@ -42,79 +46,118 @@
       margin-bottom: 20px;
     }
     form label {
-      margin-bottom: 5px;
-      font-weight: bold;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #ffcc00;
     }
     form input[type="url"] {
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
+      padding: 12px;
+      border: 2px solid #444;
+      border-radius: 8px;
       font-size: 1rem;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      background: #333;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    form input[type="url"]:focus {
+      border-color: #ffcc00;
+      outline: none;
+      box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
     }
     form button {
-      padding: 10px;
-      font-size: 1rem;
+      padding: 12px 20px;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 5px;
-      background-color: #ffcc00;
-      color: #333;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ffcc00, #ff9900);
+      color: #2a2a2a;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     form button:hover {
-      background-color: #e6b800;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 204, 0, 0.3);
+    }
+    .track-selectors {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .track-selectors label {
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+    .track-selectors select {
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: #333;
+      color: #fff;
+      border: 1px solid #444;
     }
     .video-container {
       position: relative;
       background: #000;
-      border: 5px solid #ffcc00;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
       width: 100%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+    .video-container:hover {
+      transform: scale(1.005);
     }
     video {
       width: 100%;
       display: block;
+      height: auto;
+      aspect-ratio: 16/9;
     }
     .controls {
       display: flex;
-      flex-direction: column;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-    }
-    .track-controls,
-    .video-controls {
-      display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.85));
+      padding: 15px 20px;
+      gap: 15px;
     }
-    .track-controls label,
-    .video-controls button,
-    .video-controls input,
-    .video-controls select {
-      background: none;
-      border: none;
+    .controls button {
+      padding: 8px 15px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
-      margin: 5px;
+      transition: all 0.2s ease;
     }
-    .video-controls input[type="range"] {
+    .controls button:hover {
+      background: #ffcc00;
+      color: #1a1a1a;
+      border-color: #ffcc00;
+      transform: scale(1.05);
+    }
+    .controls input[type="range"] {
       width: 100px;
+      height: 4px;
+      background: #444;
+      border-radius: 2px;
+      cursor: pointer;
     }
-    .track-controls select:hover,
-    .video-controls button:hover,
-    .video-controls select:hover {
-      color: #ffcc00;
+    .controls input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      background: #ffcc00;
+      border-radius: 50%;
     }
-    /* Style for individual audio controls */
-    .audio-controls {
-      display: flex;
-      align-items: center;
-      margin-left: 15px;
+    .controls select {
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
   </style>
 </head>
@@ -137,50 +180,48 @@
       <button type="submit">Load Video</button>
     </form>
 
+    <div class="track-selectors">
+      <label>
+        Audio Track:
+        <select id="audioTrack">
+          <option value="default" selected>Default</option>
+          <option value="english">English</option>
+          <option value="spanish">Spanish</option>
+        </select>
+      </label>
+      <label>
+        Subtitles:
+        <select id="subtitleTrack">
+          <option value="none">None</option>
+          <option value="english">English</option>
+          <option value="spanish">Spanish</option>
+        </select>
+      </label>
+    </div>
+
     <div class="video-container">
-      <video id="videoPlayer" preload="metadata" src="">
-        <!-- Sample Subtitle Tracks (update these URLs as needed) -->
-        <track kind="subtitles" label="English" srclang="en" src="subtitles_en.vtt" default>
-        <track kind="subtitles" label="Spanish" srclang="es" src="subtitles_es.vtt">
+      <video id="videoPlayer" preload="metadata">
         Your browser does not support the video tag.
       </video>
-      
       <div class="controls" id="videoControls">
-        <!-- Subtitle and Audio Selection Controls at the Top -->
-        <div class="track-controls">
-          <label for="subtitleSelect">Subtitles:</label>
-          <select id="subtitleSelect">
-            <option value="off">Off</option>
+        <button id="playPause">▶ Play</button>
+        <button id="stop">⏹ Stop</button>
+        <button id="rewind">⏪ 10s</button>
+        <button id="forward">10s ⏩</button>
+        <label>
+          🔈
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1" />
+        </label>
+        <label>
+          Speed:
+          <select id="playbackRate">
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
           </select>
-          <!-- Audio controls are in a separate container -->
-          <div class="audio-controls" id="audioControls">
-            <label for="audioSelect">Audio:</label>
-            <select id="audioSelect">
-              <option value="default">Default</option>
-            </select>
-          </div>
-        </div>
-        <!-- Video Playback Controls -->
-        <div class="video-controls">
-          <button id="playPause">Play</button>
-          <button id="stop">Stop</button>
-          <button id="rewind">« 10s</button>
-          <button id="forward">10s »</button>
-          <label>
-            Volume:
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1" />
-          </label>
-          <label>
-            Speed:
-            <select id="playbackRate">
-              <option value="0.5">0.5x</option>
-              <option value="1" selected>1x</option>
-              <option value="1.5">1.5x</option>
-              <option value="2">2x</option>
-            </select>
-          </label>
-          <button id="fullscreen">Full Screen</button>
-        </div>
+        </label>
+        <button id="fullscreen">⛶ Full</button>
       </div>
     </div>
   </div>
@@ -195,11 +236,10 @@
     const volumeSlider = document.getElementById('volumeSlider');
     const playbackRateSelect = document.getElementById('playbackRate');
     const fullscreenBtn = document.getElementById('fullscreen');
-    const subtitleSelect = document.getElementById('subtitleSelect');
-    const audioSelect = document.getElementById('audioSelect');
-    const audioControls = document.getElementById('audioControls');
 
-    // Update video source from the form
+    // Initialize with empty source
+    videoPlayer.src = "";
+
     videoForm.addEventListener('submit', function (e) {
       e.preventDefault();
       const videoUrl = document.getElementById('videoUrl').value;
@@ -207,49 +247,42 @@
         videoPlayer.src = videoUrl;
         videoPlayer.load();
         videoPlayer.play();
-        playPauseBtn.textContent = 'Pause';
+        playPauseBtn.textContent = '⏸ Pause';
       }
     });
 
-    // Play/Pause functionality
     playPauseBtn.addEventListener('click', function () {
       if (videoPlayer.paused || videoPlayer.ended) {
         videoPlayer.play();
-        playPauseBtn.textContent = 'Pause';
+        playPauseBtn.textContent = '⏸ Pause';
       } else {
         videoPlayer.pause();
-        playPauseBtn.textContent = 'Play';
+        playPauseBtn.textContent = '▶ Play';
       }
     });
 
-    // Stop functionality
     stopBtn.addEventListener('click', function () {
       videoPlayer.pause();
       videoPlayer.currentTime = 0;
-      playPauseBtn.textContent = 'Play';
+      playPauseBtn.textContent = '▶ Play';
     });
 
-    // Rewind 10 seconds
     rewindBtn.addEventListener('click', function () {
       videoPlayer.currentTime = Math.max(0, videoPlayer.currentTime - 10);
     });
 
-    // Forward 10 seconds
     forwardBtn.addEventListener('click', function () {
       videoPlayer.currentTime = Math.min(videoPlayer.duration, videoPlayer.currentTime + 10);
     });
 
-    // Volume control
     volumeSlider.addEventListener('input', function () {
       videoPlayer.volume = volumeSlider.value;
     });
 
-    // Playback speed control
     playbackRateSelect.addEventListener('change', function () {
       videoPlayer.playbackRate = playbackRateSelect.value;
     });
 
-    // Fullscreen functionality
     fullscreenBtn.addEventListener('click', function () {
       if (videoPlayer.requestFullscreen) {
         videoPlayer.requestFullscreen();
@@ -260,84 +293,11 @@
       }
     });
 
-    // Update play/pause button text on video play/pause events
     videoPlayer.addEventListener('play', function () {
-      playPauseBtn.textContent = 'Pause';
+      playPauseBtn.textContent = '⏸ Pause';
     });
     videoPlayer.addEventListener('pause', function () {
-      playPauseBtn.textContent = 'Play';
-    });
-
-    // Populate subtitle options from available textTracks
-    function populateSubtitles() {
-      // Clear previous options except "Off"
-      while (subtitleSelect.options.length > 1) {
-        subtitleSelect.remove(1);
-      }
-      const tracks = videoPlayer.textTracks;
-      for (let i = 0; i < tracks.length; i++) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.text = tracks[i].label || `Subtitle ${i + 1}`;
-        subtitleSelect.add(option);
-        // Hide all tracks by default
-        tracks[i].mode = 'hidden';
-      }
-    }
-
-    // Populate audio options if supported
-    function populateAudioTracks() {
-      // Check if the browser supports audioTracks and if tracks are available
-      if (videoPlayer.audioTracks && videoPlayer.audioTracks.length > 0) {
-        // Clear previous options except "Default"
-        while (audioSelect.options.length > 1) {
-          audioSelect.remove(1);
-        }
-        const audioTracks = videoPlayer.audioTracks;
-        for (let i = 0; i < audioTracks.length; i++) {
-          const option = document.createElement('option');
-          option.value = i;
-          option.text = audioTracks[i].label || `Audio ${i + 1}`;
-          audioSelect.add(option);
-        }
-        // Ensure audio controls are visible
-        audioControls.style.display = 'flex';
-      } else {
-        // If no audio tracks are available, display the default option only
-        audioControls.style.display = 'none';
-      }
-    }
-
-    // When the video metadata is loaded, populate subtitle and audio options
-    videoPlayer.addEventListener('loadedmetadata', function () {
-      populateSubtitles();
-      populateAudioTracks();
-    });
-
-    // Handle subtitle track change
-    subtitleSelect.addEventListener('change', function () {
-      const tracks = videoPlayer.textTracks;
-      for (let i = 0; i < tracks.length; i++) {
-        tracks[i].mode = 'hidden';
-      }
-      const selected = subtitleSelect.value;
-      if (selected !== "off") {
-        tracks[selected].mode = 'showing';
-      }
-    });
-
-    // Handle audio track change if available
-    audioSelect.addEventListener('change', function () {
-      if (videoPlayer.audioTracks) {
-        const audioTracks = videoPlayer.audioTracks;
-        for (let i = 0; i < audioTracks.length; i++) {
-          audioTracks[i].enabled = false;
-        }
-        const selected = audioSelect.value;
-        if (selected !== "default") {
-          audioTracks[selected].enabled = true;
-        }
-      }
+      playPauseBtn.textContent = '▶ Play';
     });
   </script>
 </body>
