@@ -79,16 +79,21 @@
     }
     .controls {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
       background: rgba(0, 0, 0, 0.7);
       padding: 10px;
     }
-    .controls button,
-    .controls input,
-    .controls select,
-    .controls label {
+    .track-controls, .video-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .track-controls label,
+    .video-controls button,
+    .video-controls input,
+    .video-controls select {
       background: none;
       border: none;
       color: #fff;
@@ -96,11 +101,12 @@
       cursor: pointer;
       margin: 5px;
     }
-    .controls input[type="range"] {
+    .video-controls input[type="range"] {
       width: 100px;
     }
-    .controls button:hover,
-    .controls select:hover {
+    .track-controls select:hover,
+    .video-controls button:hover,
+    .video-controls select:hover {
       color: #ffcc00;
     }
   </style>
@@ -135,34 +141,40 @@
         <track kind="subtitles" label="Spanish" srclang="es" src="subtitles_es.vtt">
         Your browser does not support the video tag.
       </video>
+      
       <div class="controls" id="videoControls">
-        <button id="playPause">Play</button>
-        <button id="stop">Stop</button>
-        <button id="rewind">« 10s</button>
-        <button id="forward">10s »</button>
-        <label>
-          Volume:
-          <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1" />
-        </label>
-        <label>
-          Speed:
-          <select id="playbackRate">
-            <option value="0.5">0.5x</option>
-            <option value="1" selected>1x</option>
-            <option value="1.5">1.5x</option>
-            <option value="2">2x</option>
+        <!-- Subtitle and Audio Selection Controls at the Top -->
+        <div class="track-controls">
+          <label for="subtitleSelect">Subtitles:</label>
+          <select id="subtitleSelect">
+            <option value="off">Off</option>
           </select>
-        </label>
-        <button id="fullscreen">Full Screen</button>
-        <!-- Subtitle and Audio Track Controls -->
-        <label for="subtitleSelect">Subtitles:</label>
-        <select id="subtitleSelect">
-          <option value="off">Off</option>
-        </select>
-        <label for="audioSelect">Audio:</label>
-        <select id="audioSelect">
-          <option value="default">Default</option>
-        </select>
+          <label for="audioSelect">Audio:</label>
+          <select id="audioSelect">
+            <option value="default">Default</option>
+          </select>
+        </div>
+        <!-- Video Playback Controls -->
+        <div class="video-controls">
+          <button id="playPause">Play</button>
+          <button id="stop">Stop</button>
+          <button id="rewind">« 10s</button>
+          <button id="forward">10s »</button>
+          <label>
+            Volume:
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1" />
+          </label>
+          <label>
+            Speed:
+            <select id="playbackRate">
+              <option value="0.5">0.5x</option>
+              <option value="1" selected>1x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2">2x</option>
+            </select>
+          </label>
+          <button id="fullscreen">Full Screen</button>
+        </div>
       </div>
     </div>
   </div>
