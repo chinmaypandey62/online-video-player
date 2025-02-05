@@ -271,19 +271,17 @@
       for (let i = 0; i < tracks.length; i++) {
         const option = document.createElement('option');
         option.value = i;
-        option.text = tracks[i].label || `Subtitle ${i+1}`;
+        option.text = tracks[i].label || `Subtitle ${i + 1}`;
         subtitleSelect.add(option);
         // Set all tracks to hidden by default
         tracks[i].mode = 'hidden';
       }
     }
 
-    // When the video metadata is loaded, populate subtitle and audio options
-    videoPlayer.addEventListener('loadedmetadata', function() {
-      populateSubtitles();
-
-      // Populate audio tracks if supported
-      if (videoPlayer.audioTracks) {
+    // Populate audio options if supported
+    function populateAudioTracks() {
+      // Check if the browser supports audioTracks and if tracks are available
+      if (videoPlayer.audioTracks && videoPlayer.audioTracks.length > 0) {
         // Clear previous options except "Default"
         while (audioSelect.options.length > 1) {
           audioSelect.remove(1);
@@ -292,14 +290,23 @@
         for (let i = 0; i < audioTracks.length; i++) {
           const option = document.createElement('option');
           option.value = i;
-          option.text = audioTracks[i].label || `Audio ${i+1}`;
+          option.text = audioTracks[i].label || `Audio ${i + 1}`;
           audioSelect.add(option);
         }
+      } else {
+        // Hide the audio selection if no audioTracks available
+        audioSelect.parentElement.style.display = 'none';
       }
+    }
+
+    // When the video metadata is loaded, populate subtitle and audio options
+    videoPlayer.addEventListener('loadedmetadata', function () {
+      populateSubtitles();
+      populateAudioTracks();
     });
 
     // Handle subtitle track change
-    subtitleSelect.addEventListener('change', function() {
+    subtitleSelect.addEventListener('change', function () {
       const tracks = videoPlayer.textTracks;
       for (let i = 0; i < tracks.length; i++) {
         tracks[i].mode = 'hidden';
@@ -311,7 +318,7 @@
     });
 
     // Handle audio track change if available
-    audioSelect.addEventListener('change', function() {
+    audioSelect.addEventListener('change', function () {
       if (videoPlayer.audioTracks) {
         const audioTracks = videoPlayer.audioTracks;
         for (let i = 0; i < audioTracks.length; i++) {
