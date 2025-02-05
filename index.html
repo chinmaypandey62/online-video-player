@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Online Video Player</title>
+  <title>Custom Video Player</title>
   <style>
     body {
       background-color: #1a1a1a;
@@ -87,7 +87,8 @@
     }
     .controls button,
     .controls input,
-    .controls select {
+    .controls select,
+    .controls label {
       background: none;
       border: none;
       color: #fff;
@@ -106,7 +107,7 @@
 </head>
 <body>
   <header>
-    <h1>Online Video Player</h1>
+    <h1>Custom Video Player</h1>
     <p>Developed by Chinmay</p>
   </header>
 
@@ -129,6 +130,9 @@
           src=""
           type="video/mp4"
         />
+        <!-- Sample Subtitle Tracks -->
+        <track kind="subtitles" label="English" srclang="en" src="subtitles_en.vtt" default>
+        <track kind="subtitles" label="Spanish" srclang="es" src="subtitles_es.vtt">
         Your browser does not support the video tag.
       </video>
       <div class="controls" id="videoControls">
@@ -150,6 +154,15 @@
           </select>
         </label>
         <button id="fullscreen">Full Screen</button>
+        <!-- Subtitle and Audio Track Controls -->
+        <label for="subtitleSelect">Subtitles:</label>
+        <select id="subtitleSelect">
+          <option value="off">Off</option>
+        </select>
+        <label for="audioSelect">Audio:</label>
+        <select id="audioSelect">
+          <option value="default">Default</option>
+        </select>
       </div>
     </div>
   </div>
@@ -164,6 +177,8 @@
     const volumeSlider = document.getElementById('volumeSlider');
     const playbackRateSelect = document.getElementById('playbackRate');
     const fullscreenBtn = document.getElementById('fullscreen');
+    const subtitleSelect = document.getElementById('subtitleSelect');
+    const audioSelect = document.getElementById('audioSelect');
 
     // Update video source from the form
     videoForm.addEventListener('submit', function (e) {
@@ -232,6 +247,69 @@
     });
     videoPlayer.addEventListener('pause', function () {
       playPauseBtn.textContent = 'Play';
+    });
+
+    // Populate subtitle options from available textTracks
+    function populateSubtitles() {
+      // Clear previous options except "Off"
+      while (subtitleSelect.options.length > 1) {
+        subtitleSelect.remove(1);
+      }
+      const tracks = videoPlayer.textTracks;
+      for (let i = 0; i < tracks.length; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.text = tracks[i].label || `Subtitle ${i+1}`;
+        subtitleSelect.add(option);
+        // Set all tracks to hidden by default
+        tracks[i].mode = 'hidden';
+      }
+    }
+
+    // When the video metadata is loaded, populate subtitle and audio options
+    videoPlayer.addEventListener('loadedmetadata', function() {
+      populateSubtitles();
+
+      // Populate audio tracks if supported
+      if (videoPlayer.audioTracks) {
+        // Clear previous options except "Default"
+        while (audioSelect.options.length > 1) {
+          audioSelect.remove(1);
+        }
+        const audioTracks = videoPlayer.audioTracks;
+        for (let i = 0; i < audioTracks.length; i++) {
+          const option = document.createElement('option');
+          option.value = i;
+          option.text = audioTracks[i].label || `Audio ${i+1}`;
+          audioSelect.add(option);
+        }
+      }
+    });
+
+    // Handle subtitle track change
+    subtitleSelect.addEventListener('change', function() {
+      const tracks = videoPlayer.textTracks;
+      for (let i = 0; i < tracks.length; i++) {
+        tracks[i].mode = 'hidden';
+      }
+      const selected = subtitleSelect.value;
+      if (selected !== "off") {
+        tracks[selected].mode = 'showing';
+      }
+    });
+
+    // Handle audio track change if available
+    audioSelect.addEventListener('change', function() {
+      if (videoPlayer.audioTracks) {
+        const audioTracks = videoPlayer.audioTracks;
+        for (let i = 0; i < audioTracks.length; i++) {
+          audioTracks[i].enabled = false;
+        }
+        const selected = audioSelect.value;
+        if (selected !== "default") {
+          audioTracks[selected].enabled = true;
+        }
+      }
     });
   </script>
 </body>
