@@ -83,7 +83,8 @@
       background: rgba(0, 0, 0, 0.7);
       padding: 10px;
     }
-    .track-controls, .video-controls {
+    .track-controls,
+    .video-controls {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -109,6 +110,12 @@
     .video-controls select:hover {
       color: #ffcc00;
     }
+    /* Style for individual audio controls */
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      margin-left: 15px;
+    }
   </style>
 </head>
 <body>
@@ -131,12 +138,8 @@
     </form>
 
     <div class="video-container">
-      <video id="videoPlayer" preload="metadata">
-        <source
-          src=""
-          type="video/mp4"
-        />
-        <!-- Sample Subtitle Tracks -->
+      <video id="videoPlayer" preload="metadata" src="">
+        <!-- Sample Subtitle Tracks (update these URLs as needed) -->
         <track kind="subtitles" label="English" srclang="en" src="subtitles_en.vtt" default>
         <track kind="subtitles" label="Spanish" srclang="es" src="subtitles_es.vtt">
         Your browser does not support the video tag.
@@ -149,10 +152,13 @@
           <select id="subtitleSelect">
             <option value="off">Off</option>
           </select>
-          <label for="audioSelect">Audio:</label>
-          <select id="audioSelect">
-            <option value="default">Default</option>
-          </select>
+          <!-- Audio controls are in a separate container -->
+          <div class="audio-controls" id="audioControls">
+            <label for="audioSelect">Audio:</label>
+            <select id="audioSelect">
+              <option value="default">Default</option>
+            </select>
+          </div>
         </div>
         <!-- Video Playback Controls -->
         <div class="video-controls">
@@ -191,6 +197,7 @@
     const fullscreenBtn = document.getElementById('fullscreen');
     const subtitleSelect = document.getElementById('subtitleSelect');
     const audioSelect = document.getElementById('audioSelect');
+    const audioControls = document.getElementById('audioControls');
 
     // Update video source from the form
     videoForm.addEventListener('submit', function (e) {
@@ -273,7 +280,7 @@
         option.value = i;
         option.text = tracks[i].label || `Subtitle ${i + 1}`;
         subtitleSelect.add(option);
-        // Set all tracks to hidden by default
+        // Hide all tracks by default
         tracks[i].mode = 'hidden';
       }
     }
@@ -293,9 +300,11 @@
           option.text = audioTracks[i].label || `Audio ${i + 1}`;
           audioSelect.add(option);
         }
+        // Ensure audio controls are visible
+        audioControls.style.display = 'flex';
       } else {
-        // Hide the audio selection if no audioTracks available
-        audioSelect.parentElement.style.display = 'none';
+        // If no audio tracks are available, display the default option only
+        audioControls.style.display = 'none';
       }
     }
 
